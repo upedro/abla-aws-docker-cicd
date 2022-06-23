@@ -1,0 +1,61 @@
+version: 2.1
+
+jobs:
+  serverless-deploy:
+    description: Update lambda functions
+    parameters:
+      aws-access-key-id:
+        default: AWS_ACCESS_KEY_ID
+        description: |
+          AWS access key id for IAM role. Set this to the name of
+          the environment variable you will use to hold this
+          value, i.e. AWS_ACCESS_KEY.
+        type: env_var_name
+      aws-secret-access-key:
+        default: AWS_SECRET_ACCESS_KEY
+        description: |
+          AWS secret key for IAM role. Set this to the name of
+          the environment variable you will use to hold this
+          value, i.e. $AWS_SECRET_ACCESS_KEY.
+        type: env_var_name
+      serverless-stage:
+        default: dev
+        description: |
+          The stage to deploy to.
+        type: string
+    docker:
+      - image: nikolaik/python-nodejs:python3.9-nodejs16-slim
+    steps:
+      - run:
+          name: Install Git
+          command: |
+            apt-get update
+            apt-get install git -y
+      - checkout
+      - run:
+          name: Install and configure serverless
+          command: |
+            npm install -g serverless
+            npm install
+
+            serverless config credentials -p aws -k <<parameters.aws-access-key-id>> -s <<parameters.aws-secret-access-key>>
+      - run:
+          name: Deploy HTTP API
+          command: |
+            serverless deploy --verbose --stage <<parameters.serverless-stage>> --config serverless.yml
+
+workflows:
+  deploy:
+    jobs:
+      - serverless-deploy:
+          serverless-stage: prod
+          filters:
+            branches:
+              only:
+                - main
+      - serverless-deploy:
+          serverless-stage: dev
+          filters:
+            branches:
+              only:
+                - dev
