@@ -9,6 +9,7 @@ FROM public.ecr.aws/lambda/python@sha256:75dd3378f9733d43f4a4b6a02c237512e0c6de5
 RUN yum install atk cups-libs gtk3 libXcomposite alsa-lib \
     libXcursor libXdamage libXext libXi libXrandr libXScrnSaver \
     libXtst pango at-spi2-atk libXt xorg-x11-server-Xvfb \
+    docker-ce docker-ce-cli containerd.io docker-compose-plugin \
     xorg-x11-xauth dbus-glib dbus-glib-devel -y
 RUN pip install selenium
 COPY --from=build /opt/chrome-linux /opt/chrome
