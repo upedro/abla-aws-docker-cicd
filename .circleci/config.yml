@@ -1,9 +1,12 @@
 version: 2.1
 
 jobs:
+
   build:
     docker:
       - image: circleci/python:2.7.14
+        environment:
+
     steps:
       - checkout
       - run:
@@ -33,8 +36,7 @@ jobs:
           name: Deploy app to Digital Ocean Server via Docker
           command: |
             ssh -o StrictHostKeyChecking=no root@hello.dpunks.org "/bin/bash ./deploy_app.sh ariv3ra/$IMAGE_NAME:$TAG"
-
-jobs:
+            
   serverless-deploy:
     description: Update lambda functions
     parameters:
