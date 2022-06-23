@@ -11,6 +11,9 @@ provider:
         path: ./
         platform: linux/amd64
 
+plugins:
+  - serverless-python-requirements
+ 
 custom:
   pythonRequirements:
     dockerizePip: true

@@ -17,7 +17,7 @@
     "url": "https://github.com/upedro/abla-aws-docker-cicd/issues"
   },
   "homepage": "https://github.com/upedro/abla-aws-docker-cicd#readme",
-  "dependencies": {
-
+  "devDependencies": {
+    "serverless-python-requirements": "^5.4.0"
   }
 }
