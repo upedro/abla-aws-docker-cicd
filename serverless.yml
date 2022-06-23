@@ -11,6 +11,10 @@ provider:
         path: ./
         platform: linux/amd64
 
+custom:
+  pythonRequirements:
+    dockerizePip: true
+
 functions:
   dev:
     timeout: 60
