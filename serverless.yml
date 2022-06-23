@@ -16,7 +16,8 @@ plugins:
  
 custom:
   pythonRequirements:
-    dockerizePip: true
+    pythonBin: python3
+    dockerizePip: false
 
 functions:
   dev:
